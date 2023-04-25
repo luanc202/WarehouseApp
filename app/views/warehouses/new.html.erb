@@ -1,5 +1,6 @@
 <h1>Novo Galpão</h1>
-<%= form_with(model: Warehouse.new) do |f| %>
+<h3><%= flash[:notice] %></h3>
+<%= form_with(model: @warehouse) do |f| %>
   <div>
     <%= f.label :name,'Nome' %>
     <%= f.text_field :name %>
