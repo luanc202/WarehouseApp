@@ -1,0 +1,40 @@
+<div id="<%= dom_id movie %>">
+
+  <img width='300px' height='400px' src=<%= movie.image_url %> />
+
+  <p>
+    <strong>Title:</strong>
+    <%= movie.title %>
+  </p>
+
+  <p>
+    <strong>Release year:</strong>
+    <%= movie.release_year %>
+  </p>
+
+  <p>
+    <strong>Synopsis:</strong>
+    <p><%= movie.synopsis %></p>
+  </p>
+
+  <p>
+    <strong>Origin country:</strong>
+    <%= movie.origin_country %>
+  </p>
+
+  <p>
+    <strong>Length:</strong>
+    <%= movie.length %> minutes
+  </p>
+
+  <p>
+    <strong>Director:</strong>
+    <%= movie.director.name %>
+  </p>
+
+  <p>
+    <strong>Genre:</strong>
+    <%= movie.movie_genre.name %>
+  </p>
+
+</div>

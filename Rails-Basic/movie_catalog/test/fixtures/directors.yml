@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  nationality: MyString
+  birthdate: 2023-04-03
+  fav_genre: MyString
+
+two:
+  name: MyString
+  nationality: MyString
+  birthdate: 2023-04-03
+  fav_genre: MyString

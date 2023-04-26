@@ -1,0 +1,11 @@
+<h1>Catálogo de Livros</h1>
+<p>Boas vindas!</p>
+
+<%= link_to 'Registrar livro', new_book_path %>
+<br/>
+<hr/>
+<% @books.each do |book| %>
+  <h3><%= link_to book.title, book_path(book) %></h3>
+  <p><%= book.author %> </p>
+  <p><%= book.publication_year %> </p>
+<% end %>
