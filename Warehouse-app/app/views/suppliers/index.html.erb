@@ -15,7 +15,7 @@
     <tbody>
       <% @suppliers.each do |s| %>
         <tr>
-          <td><%= s.corporate_name %></td>
+          <td><%= link_to(s.corporate_name, supplier_path(s.id)) %></td>
           <td><%= s.city %>·-·<%= s.state %></td>
         </tr>
       <% end %>
