@@ -16,7 +16,7 @@ describe 'Usuário se autentica' do
 
     within 'nav' do
       expect(page).not_to have_link('Entrar')
-      expect(page).to have_link('Sair')
+      expect(page).to have_button('Sair')
       expect(page).to have_content('joao@email.com')
     end
     expect(page).to have_content('Login efetuado com sucesso.')
@@ -36,10 +36,10 @@ describe 'Usuário se autentica' do
     end
     click_on 'Sair'
 
-    expect(page).to have_content('Usuário saiu.')
+    expect(page).to have_content('Logout efetuado com sucesso.')
     within 'nav' do
       expect(page).to have_link('Entrar')
-      expect(page).not_to have_link('Sair')
+      expect(page).not_to have_button('Sair')
       expect(page).not_to have_content('joao@email.com')
     end
   end
