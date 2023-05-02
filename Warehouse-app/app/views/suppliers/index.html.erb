@@ -1,0 +1,26 @@
+<h1>Fornecedores</h1>
+
+<% if @suppliers.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Nome
+        </th>
+        <th>
+          Localização
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @suppliers.each do |s| %>
+        <tr>
+          <td><%= s.corporate_name %></td>
+          <td><%= s.city %>·-·<%= s.state %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h2>Não existem Fornecedores cadastrados</h2>
+<% end %>
