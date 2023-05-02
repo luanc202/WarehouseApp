@@ -13,9 +13,9 @@ describe 'Usuário vê fornecedores' do
 
   it 'com sucesso' do
 
-    Supplier.create!(corporate_name: 'ACME LTDA', brand_name: 'ACME', registration_number: '434472168',
+    Supplier.create!(corporate_name: 'ACME LTDA', brand_name: 'ACME', registration_number: '43447216000102',
                      full_address: 'Av da Palmas, 123', city: 'Bauru', state: 'SP', email: 'contato@acme.com')
-    Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '62445233',
+    Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '624452333400043',
                      full_address: 'Distrito Industrial N33, Bloco 4B', city: 'Teresina', state: 'PI', email: 'contato@sparkindustries.com')
 
     visit root_path
