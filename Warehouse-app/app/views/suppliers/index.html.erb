@@ -5,7 +5,7 @@
     <thead>
       <tr>
         <th>
-          Nome
+          Razão Social
         </th>
         <th>
           Localização
@@ -24,3 +24,5 @@
 <% else %>
   <h2>Não existem Fornecedores cadastrados</h2>
 <% end %>
+
+<%= link_to 'Cadastrar novo Fornecedor', new_supplier_path %>
