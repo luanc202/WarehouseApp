@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Usuário cadastra modelo de produto' do
   it 'com sucesso' do
-    user = User.create!(email: 'joao@email.com', password: '171653')
+    user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
     supplier = Supplier.create!(corporate_name: 'Samsung Electronics Brasil Co.', brand_name: 'Samsung', registration_number: '73563216000102',
                                 full_address: 'Av dos Smartphones, X43', city: 'Marília', state: 'SP', email: 'contato@samsung.sac.com')
 
@@ -28,7 +28,7 @@ describe 'Usuário cadastra modelo de produto' do
   end
 
   it 'deve preencher todos os campos' do
-    user = User.create!(email: 'joao@email.com', password: '171653')
+    user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
     supplier = Supplier.create!(corporate_name: 'Samsung Electronics Brasil Co.', brand_name: 'Samsung', registration_number: '73563216000102',
                                 full_address: 'Av dos Smartphones, X43', city: 'Marília', state: 'SP', email: 'contato@samsung.sac.com')
 
