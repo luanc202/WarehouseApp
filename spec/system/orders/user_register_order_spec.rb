@@ -12,6 +12,7 @@ describe 'Usuário cadastra um pedido' do
                                 full_address: 'Av da Palmas, 123', city: 'Bauru', state: 'SP', email: 'contato@acme.com')
     Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '624452333400043',
                      full_address: 'Distrito Industrial N33, Bloco 4B', city: 'Teresina', state: 'PI', email: 'contato@sparkindustries.com')
+    allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABCD1234')
 
     login_as(user)
     visit root_path
@@ -22,6 +23,7 @@ describe 'Usuário cadastra um pedido' do
     click_on 'Gravar'
 
     expect(page).to have_content('Pedido registrado com sucesso')
+    expect(page).to have_content('Pedido | ABCD1234')
     expect(page).to have_content('Galpão Destino: GRU - Aeroporto SP')
     expect(page).to have_content('Fornecedor: ACME LTDA - ACME')
     expect(page).to have_content('Usuário Responsável: João | joao@email.com')
