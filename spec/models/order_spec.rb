@@ -52,7 +52,7 @@ RSpec.describe Order, type: :model do
       expect(result).to be true
     end
     context 'presence' do
-      it 'false when warehouse_id is empty' do
+      it 'warehouse_id é obrigatório' do
         user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
         Warehouse.create!(name: 'Cuiabá', code: 'CWB', city: 'Cuiabá', area: 70_000,
                           address: 'Av das Capivaras, 143', cep: '7550-000', description: 'Galpão Central Brasileiro')
@@ -69,7 +69,7 @@ RSpec.describe Order, type: :model do
         expect(result).to eq false
       end
 
-      it 'false when supplier_id is empty' do
+      it 'supplier_id é obrigatório' do
         user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
         Warehouse.create!(name: 'Cuiabá', code: 'CWB', city: 'Cuiabá', area: 70_000,
                           address: 'Av das Capivaras, 143', cep: '7550-000', description: 'Galpão Central Brasileiro')
@@ -86,7 +86,7 @@ RSpec.describe Order, type: :model do
         expect(result).to eq false
       end
 
-      it 'false when user_id is empty' do
+      it 'user_id é obrigatório' do
         user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
         Warehouse.create!(name: 'Cuiabá', code: 'CWB', city: 'Cuiabá', area: 70_000,
                           address: 'Av das Capivaras, 143', cep: '7550-000', description: 'Galpão Central Brasileiro')
@@ -101,6 +101,41 @@ RSpec.describe Order, type: :model do
         result = order.valid?
 
         expect(result).to eq false
+      end
+
+      it 'estimated_delivery_date é obrigatório' do
+        order = Order.new(estimated_delivery_date: '')
+
+        order.valid?
+        result = order.errors.include?(:estimated_delivery_date)
+
+        expect(result).to eq true
+      end
+
+      it 'data estimada de entrega não deve ser passada' do
+        order = Order.new(estimated_delivery_date: 1.day.ago)
+
+        order.valid?
+
+        expect(order.errors.include?(:estimated_delivery_date)).to eq true
+        expect(order.errors[:estimated_delivery_date]).to include('deve ser futura')
+      end
+
+      it 'data estimada de entrega não deve ser igual a hoje' do
+        order = Order.new(estimated_delivery_date: Date.today)
+
+        order.valid?
+
+        expect(order.errors.include?(:estimated_delivery_date)).to eq true
+        expect(order.errors[:estimated_delivery_date]).to include('deve ser futura')
+      end
+
+      it 'data estimada de entrega deve igual ou maior do que amanhã' do
+        order = Order.new(estimated_delivery_date: 1.day.from_now)
+
+        order.valid?
+
+        expect(order.errors.include?(:estimated_delivery_date)).to eq false
       end
     end
   end
