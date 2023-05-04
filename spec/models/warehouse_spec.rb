@@ -48,4 +48,15 @@ RSpec.describe Warehouse, type: :model do
       expect(result).to be_falsey
     end
   end
+
+  describe '#full_description' do
+    it 'exibe o nome fantasia e o código' do
+      w = Warehouse.new(name: 'Rio', code: 'RIO', address: 'Rua do Rio, 123', cep: '12345-123', city: 'Rio',
+                        area: 1000, description: 'Alguma descrição')
+
+      result = w.full_description
+
+      expect(w.full_description).to eq('RIO - Rio')
+    end
+  end
 end
