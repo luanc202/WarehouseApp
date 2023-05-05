@@ -10,11 +10,22 @@ class OrdersController < ApplicationController
     order_params = params.require(:order).permit(:estimated_delivery_date, :warehouse_id, :supplier_id)
     @order = Order.new(order_params)
     @order.user = current_user
-    @order.save!
-    redirect_to @order, notice: 'Pedido registrado com sucesso'
+     if @order.save
+      redirect_to @order, notice: 'Pedido registrado com sucesso'
+     else
+      @warehouses = Warehouse.all
+      @suppliers = Supplier.all
+      flash.now[:alert] = 'Não foi possível registrar o pedido.'
+      render :new
+     end
   end
 
   def show
     @order = Order.find(params[:id])
+  end
+
+  def search
+    @code = params[:query]
+    @order = Order.find_by(code: params[:query])
   end
 end

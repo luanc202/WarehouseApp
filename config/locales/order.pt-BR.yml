@@ -11,3 +11,4 @@ pt-BR:
         user: 'Usuário Responsável' 
         user_id: 'Usuário Responsável' 
         estimated_delivery_date: 'Data Prevista de Entrega'
+        code: 'Código'

@@ -38,4 +38,24 @@ describe 'Usuário cadastra um pedido' do
 
     expect(current_path).to eq new_user_session_path
   end
+
+  it 'e não informa a data de entrega' do
+    user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
+    warehouse = Warehouse.create!(name: 'Aeroporto SP', code: 'GRU', city: 'Guarulhos', area: 100_000,
+                                  address: 'Avenida do Aeroporto, 1000', cep: '15000-000',
+                                  description: 'Galpão destinado para cargas internacionais')
+    supplier = Supplier.create!(corporate_name: 'ACME LTDA', brand_name: 'ACME', registration_number: '43447216000102',
+                                full_address: 'Av da Palmas, 123', city: 'Bauru', state: 'SP', email: 'contato@acme.com')
+
+    login_as(user)
+    visit root_path
+    click_on 'Registrar Pedido'
+    select 'GRU - Aeroporto SP', from: 'Galpão Destino'
+    select supplier.corporate_name, from: 'Fornecedor'
+    fill_in 'Data Prevista de Entrega', with: ''
+    click_on 'Gravar'
+
+    expect(page).to have_content('Não foi possível registrar o pedido.')
+    expect(page).to have_content('Data Prevista de Entrega não pode ficar em branco')
+  end
 end
