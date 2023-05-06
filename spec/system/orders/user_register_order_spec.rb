@@ -20,7 +20,7 @@ describe 'Usuário cadastra um pedido' do
     select 'GRU - Aeroporto SP', from: 'Galpão Destino'
     select supplier.corporate_name, from: 'Fornecedor'
     fill_in 'Data Prevista de Entrega', with: '10/05/2023'
-    click_on 'Gravar'
+    click_on 'Criar Pedido'
 
     expect(page).to have_content('Pedido registrado com sucesso')
     expect(page).to have_content('Pedido | ABCD1234')
@@ -53,7 +53,7 @@ describe 'Usuário cadastra um pedido' do
     select 'GRU - Aeroporto SP', from: 'Galpão Destino'
     select supplier.corporate_name, from: 'Fornecedor'
     fill_in 'Data Prevista de Entrega', with: ''
-    click_on 'Gravar'
+    click_on 'Criar Pedido'
 
     expect(page).to have_content('Não foi possível registrar o pedido.')
     expect(page).to have_content('Data Prevista de Entrega não pode ficar em branco')
