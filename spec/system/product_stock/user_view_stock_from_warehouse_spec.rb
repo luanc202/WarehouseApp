@@ -4,8 +4,8 @@ describe 'Usuário vê o estoque na tela do galpão' do
   it 'na tela do galpão' do
     user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
     warehouse = Warehouse.new(name: 'Aeroporto SP', code: 'GRU', city: 'Guarulhos', area: 100_000,
-                      address: 'Avenida do Aeroporto, 1000', cep: '15000-000',
-                      description: 'Galpão destinado para cargas internacionais')
+                              address: 'Avenida do Aeroporto, 1000', cep: '15000-000',
+                              description: 'Galpão destinado para cargas internacionais')
     supplier = Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '624452333400043',
                                 full_address: 'Distrito Industrial N33, Bloco 4B', city: 'Teresina', state: 'PI', email: 'contato@sparkindustries.com')
     product_tv = ProductModel.create!(name: 'TV 32', weight: 8000, width: 70, height: 45, depth: 10, sku: 'TV32-SAMSU-BTV800',
@@ -24,9 +24,38 @@ describe 'Usuário vê o estoque na tela do galpão' do
     visit root_path
     click_on 'Aeroporto SP'
 
-    expect(page).to have_content('Itens em Estoque')
-    expect(page).to have_content('3 x TV32-SAMSU-BTV800')
-    expect(page).to have_content('2 x SDB55-SAMS-JKL3523')
-    expect(page).not_to have_content('ZNT-R7-16GB-1TB')
+    within 'div#stock_products' do
+      expect(page).to have_content('Itens em Estoque')
+      expect(page).to have_content('3 x TV32-SAMSU-BTV800')
+      expect(page).to have_content('2 x SDB55-SAMS-JKL3523')
+      expect(page).not_to have_content('ZNT-R7-16GB-1TB')
+    end
+  end
+
+  it 'e dá baixa em um item' do
+    user = User.create!(email: 'joao@email.com', password: '171653', name: 'João')
+    warehouse = Warehouse.new(name: 'Aeroporto SP', code: 'GRU', city: 'Guarulhos', area: 100_000,
+                              address: 'Avenida do Aeroporto, 1000', cep: '15000-000',
+                              description: 'Galpão destinado para cargas internacionais')
+    supplier = Supplier.create!(corporate_name: 'Spark Industries Brasil LTDA', brand_name: 'Spark', registration_number: '624452333400043',
+                                full_address: 'Distrito Industrial N33, Bloco 4B', city: 'Teresina', state: 'PI', email: 'contato@sparkindustries.com')
+    product_tv = ProductModel.create!(name: 'TV 32', weight: 8000, width: 70, height: 45, depth: 10, sku: 'TV32-SAMSU-BTV800',
+                                      supplier:)
+    order = Order.create!(user:, warehouse:, supplier:,
+                          estimated_delivery_date: 1.week.from_now)
+
+    2.times { StockProduct.create!(order:, warehouse:, product_model: product_tv) }
+
+    login_as(user)
+    visit root_path
+    click_on 'Aeroporto SP'
+    select 'TV32-SAMSU-BTV800', from: 'Item para Saída'
+    fill_in 'Destinatário', with: 'Julia Schmidt'
+    fill_in 'Endereço Destino', with: 'Rua das Árvores, 276 - Campinas - São Paulo'
+    click_on 'Confirmar Retirada'
+
+    expect(current_path).to eq(warehouse_path(warehouse.id))
+    expect(page).to have_content('Item retirado com sucesso.')
+    expect(page).to have_content('1 x TV32-SAMSU-BTV800')
   end
 end
