@@ -1,0 +1,14 @@
+<h1>Adicionar Itens ao Pedido <%= @order.code %></h1>
+
+<%= form_for [@order, @order_item] do |f| %>
+  <div>
+    <%= f.hidden_field :order_id, value: @order.id %>
+    <%= f.label :product_model_id, 'Produto' %>
+    <%= f.collection_select :product_model_id, @products, :id, :name %>
+  </div>
+  <div>
+    <%= f.label :quantity, 'Quantidade' %>
+    <%= f.number_field :quantity %>
+  </div>
+    <%= f.submit 'Adicionar' %>
+<% end %>
