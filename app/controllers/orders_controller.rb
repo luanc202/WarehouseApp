@@ -54,7 +54,8 @@ class OrdersController < ApplicationController
   end
 
   def delivered
-    @order.delivered!
+    @order.deliver_and_stock!
+
     redirect_to @order
   end
 

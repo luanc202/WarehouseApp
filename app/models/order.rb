@@ -12,6 +12,17 @@ class Order < ApplicationRecord
 
   before_validation :generate_code
 
+  def deliver_and_stock!
+    delivered!
+
+    order_items.each do |item|
+      item.quantity.times do
+        StockProduct.create!(product_model: item.product_model, warehouse:, order: self,
+                             serial_number: SecureRandom.hex(10))
+      end
+    end
+  end
+
   private
 
   def generate_code
@@ -19,7 +30,7 @@ class Order < ApplicationRecord
   end
 
   def estimated_delivery_date_is_future
-    return unless self.estimated_delivery_date.present? && estimated_delivery_date <= Date.today
+    return unless estimated_delivery_date.present? && estimated_delivery_date <= Date.today
 
     errors.add(:estimated_delivery_date, 'deve ser futura')
   end
