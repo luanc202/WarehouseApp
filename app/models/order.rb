@@ -10,7 +10,7 @@ class Order < ApplicationRecord
   validate :estimated_delivery_date_is_future
   validates :code, uniqueness: true
 
-  before_validation :generate_code
+  before_validation :generate_code, on: :create
 
   def deliver_and_stock!
     delivered!
